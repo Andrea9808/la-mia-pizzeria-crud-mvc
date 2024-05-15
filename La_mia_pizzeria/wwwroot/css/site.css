@@ -30,17 +30,20 @@ h1 {
 }
 
 .card {
-    height: 355px;
     transition: transform 0.3s ease-out;
-    border-radius: 50px;
     overflow: auto;
 }
 
-    .card:hover {
-        transform: scale(1.1);
-    }
+
+.card:hover {
+     transform: scale(1.1);
+ }
 
 img {
     width: 100%;
     height: 150px;
+}
+
+a{
+    text-decoration: none;
 }
