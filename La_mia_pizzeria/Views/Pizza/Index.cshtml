@@ -1,0 +1,29 @@
+﻿@model List<Pizza>
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Pizzeria";
+}
+
+
+<div class="container-fluid bg">
+    <h1 class="text-center p-5">La mia pizzeria</h1>
+    <div class="container">
+        <div class="row">
+            @foreach (var pizza in Model)
+            {
+                <div class="col-6 col-lg-3 mb-4">
+                    <div class="card">
+                        <div class="pizze">
+                            <img src="@pizza._img" alt="@pizza._name">
+                            <div class="card-body">
+                                <h5 class="card-title">@pizza._name</h5>
+                                <p class="card-text">@pizza._description</p>
+                                <p class="card-text">Prezzo: €@pizza._price</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
