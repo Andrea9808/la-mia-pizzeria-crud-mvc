@@ -49,5 +49,19 @@ namespace La_mia_pizzeria.Controllers
         }
 
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(Pizza data)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("Create", data);
+            }
+
+            PizzaManager.InsertPizza(data);
+
+            return RedirectToAction("Index");
+        }
+
     }
 }

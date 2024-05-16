@@ -1,4 +1,6 @@
-﻿namespace La_mia_pizzeria.Models
+﻿using Microsoft.Extensions.Hosting;
+
+namespace La_mia_pizzeria.Models
 {
     static class PizzaManager
     {
@@ -23,8 +25,14 @@
                 //new Pizza("Tonno e Cipolla", "Pomodoro, Mozzarella, Tonno, Cipolla", "https://tse2.mm.bing.net/th?id=OIP.BxKPPeXp9Ik6baCwRkbUagHaEK&pid=Api&P=0&h=180", 7.00m),
                 //new Pizza("Vegetariana", "Pomodoro, Mozzarella, Verdure Grigliate", "https://tse1.mm.bing.net/th?id=OIP.cRd2t4oPlY8Ny30gKs6QyQHaE9&pid=Api&P=0&h=180", 7.50m)
             };
-
             return pizze;
+        }
+
+        public static void InsertPizza(Pizza pizza)
+        {
+            using PizzaContext db = new PizzaContext();
+            db.Pizzas.Add(pizza);
+            db.SaveChanges();
         }
     }
 }

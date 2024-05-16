@@ -1,26 +1,225 @@
 ﻿@model Pizza
 
-<div class="container">
-    <form asp-controller="Pizza" asp-action="Create" method="post">
-        @Html.AntiForgeryToken()
-        <div class="mb-3">
-            <strong>Nome:</strong>
-            <input asp-for="_name" class="d-block w-100" />
-        </div>
-        <div class="mb-3">
-            <strong>Descrizione:</strong>
-            <input asp-for="_description" class="d-block w-100" />
-        </div>
-        <div class="mb-3">
-            <strong>Immagine:</strong>
-            <input asp-for="_img" class="d-block w-100" />
-        </div>
-        <div class="mb-3">
-            <strong>Prezzo:</strong>
-            <input asp-for="_price" class="d-block w-100" />
-        </div>
-        <div class="text-end">
-            <input type="submit" class="btn btn-small btn-info" value="Salva">
-        </div>
-    </form>
+<h1>Inserisci una pizza</h1>
+<div class="body">
+    <div class="my-container-form">
+        <form asp-controller="Pizza" asp-action="Create" method="post">
+            @Html.AntiForgeryToken()
+
+            <div class="mb-3">
+                <input asp-for="_name" class="d-block w-100 form__input" placeholder="Nome" />
+                <label for="_name" class="form__label">Nome</label>
+                <span asp-validation-for="_name" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <input asp-for="_description" class="d-block w-100 form__input" placeholder="Descrizione" />
+                <label for="_description" class="form__label">Descrizione</label>
+                <span asp-validation-for="_description" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <input asp-for="_img" class="d-block w-100 form__input" placeholder="Immagine"/>
+                <label for="_img" class="form__label">Immagine</label>
+                <span asp-validation-for="_img" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <input type="number" asp-for="_price" class="d-block w-100 form__input" placeholder="Prezzo"/>
+                <label for="_price" class="form__label">Prezzo</label>
+                <span asp-validation-for="_price" class="text-danger"></span>
+            </div>
+
+            <div class="text-end">
+                <input type="submit" class="btn btn-small btn-info" value="Salva">
+            </div>
+        </form>
+    </div>
 </div>
+
+<style>
+
+.button {
+  position: relative;
+  padding: 10px 22px;
+  border-radius: 6px;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  background-color: #7d2ae8;
+  transition: all 0.2s ease;
+}
+
+.button:active {
+  transform: scale(0.96);
+}
+
+.button:before,
+.button:after {
+  position: absolute;
+  content: "";
+  width: 150%;
+  left: 50%;
+  height: 100%;
+  transform: translateX(-50%);
+  z-index: -1000;
+  background-repeat: no-repeat;
+}
+
+.button:hover:before {
+  top: -70%;
+  background-image: radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+    radial-gradient(circle, transparent 20%, #7d2ae8 20%, transparent 30%),
+    radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+    radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+    radial-gradient(circle, transparent 10%, #7d2ae8 15%, transparent 20%),
+    radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+    radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+    radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+    radial-gradient(circle, #7d2ae8 20%, transparent 20%);
+  background-size: 10% 10%, 20% 20%, 15% 15%, 20% 20%, 18% 18%, 10% 10%, 15% 15%,
+    10% 10%, 18% 18%;
+  background-position: 50% 120%;
+  animation: greentopBubbles 0.6s ease;
+}
+
+@keyframes greentopBubbles {
+  0% {
+    background-position: 5% 90%, 10% 90%, 10% 90%, 15% 90%, 25% 90%, 25% 90%,
+      40% 90%, 55% 90%, 70% 90%;
+  }
+
+  50% {
+    background-position: 0% 80%, 0% 20%, 10% 40%, 20% 0%, 30% 30%, 22% 50%,
+      50% 50%, 65% 20%, 90% 30%;
+  }
+
+  100% {
+    background-position: 0% 70%, 0% 10%, 10% 30%, 20% -10%, 30% 20%, 22% 40%,
+      50% 40%, 65% 10%, 90% 20%;
+    background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+  }
+}
+
+.button:hover::after {
+  bottom: -70%;
+  background-image: radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+    radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+    radial-gradient(circle, transparent 10%, #7d2ae8 15%, transparent 20%),
+    radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+    radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+    radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+    radial-gradient(circle, #7d2ae8 20%, transparent 20%);
+  background-size: 15% 15%, 20% 20%, 18% 18%, 20% 20%, 15% 15%, 20% 20%, 18% 18%;
+  background-position: 50% 0%;
+  animation: greenbottomBubbles 0.6s ease;
+}
+
+@keyframes greenbottomBubbles {
+  0% {
+    background-position: 10% -10%, 30% 10%, 55% -10%, 70% -10%, 85% -10%,
+      70% -10%, 70% 0%;
+  }
+
+  50% {
+    background-position: 0% 80%, 20% 80%, 45% 60%, 60% 100%, 75% 70%, 95% 60%,
+      105% 0%;
+  }
+
+  100% {
+    background-position: 0% 90%, 20% 90%, 45% 70%, 60% 110%, 75% 80%, 95% 70%,
+      110% 10%;
+    background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+  }
+}
+
+.body {
+    background-color: white;
+    color: black;
+    font-family: 'Inter', sans-serif;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+
+code {
+    font-size: 1rem;
+    padding: 0 0.5rem;
+    background-color: #f0f0f0;
+}
+
+.my-container-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 2rem 1.5rem;
+    background-color: #f0f0f0;
+}
+
+media (min-width: 768px) {
+    .my-container-form {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .cta-form {
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+}
+.form {
+    align-self: center;
+}
+
+.form__input {
+    width: clamp(120px, 50vw, 420px);
+    height: 2.5rem;
+    padding: 0 1.25rem;
+    border: 1px solid black;
+    border-radius: 2px;
+    margin: 0.625rem auto;
+    transition: all 250ms;
+}
+
+.form__input:focus {
+    outline: none;
+    border-top-color: rgba(0, 0, 0, 0.1);
+}
+
+.form__input:focus+.form__label,
+.form__input:not(:placeholder-shown)+.form__label {
+    transform: translateY(-4.50rem) scale(1);
+    color: black;
+}
+
+.form__input::placeholder {
+    display: none;
+    color: transparent;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.form__input:not(:placeholder-shown) {
+    border-top-color: rgba(0, 0, 0, 0.5);
+}
+
+.form__label {
+    font-size: 1rem;
+    color: grey;
+    display: block;
+    transform: translate(1.25rem, -2.5rem);
+    transform-origin: 0 0;
+    transition: all 500ms;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    pointer-events: none;
+}
+
+</style>
