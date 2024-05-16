@@ -10,23 +10,24 @@ namespace La_mia_pizzeria.Models
 
         
         [Column("pizza_name")]
-        [Required(ErrorMessage = "Il campo è obbligatorio")]
+        [Required(ErrorMessage = "Il campo nome è obbligatorio")]
         [StringLength(25, ErrorMessage = "Il nome non può avere più di 25 caratteri")]
         public string _name { get; set; }
 
         
         [Column("pizza_description")]
-        [Required(ErrorMessage = "Il campo è obbligatorio")]
+        [Required(ErrorMessage = "Il campo descrizione è obbligatorio")]
         [StringLength(100, ErrorMessage = "La descrizione non può avere più di 100 caratteri")]
+        [MinLenght(5)]
         public string _description { get; set; }
 
         [Column("pizza_img")]
-        [Required(ErrorMessage = "Il campo è obbligatorio")]
+        [Required(ErrorMessage = "Il campo immagine è obbligatorio")]
         public string _img { get; set; }
 
         
         [Column("pizza_price")]
-        [Required(ErrorMessage = "Il campo è obbligatorio")]
+        [Required(ErrorMessage = "Il campo prezzo è obbligatorio")]
         [Range(0.01, double.MaxValue, ErrorMessage = "Il prezzo deve essere maggiore di zero.")]
         public decimal _price { get; set; }
 
