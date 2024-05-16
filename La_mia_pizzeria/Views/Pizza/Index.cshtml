@@ -6,7 +6,10 @@
 
 <div class="container-fluid bg">
     <h1 class="text-center p-5">La mia pizzeria</h1>
-    <div class="container">
+    <div class="container d-flex flex-column align-items-center" >
+        <button class="btn-dark text-center mb-4" style="border: none; border-radius: 7px; padding: 5px 5px;">
+            <a class="link_create" href="@Url.Action("Create", "Pizza")"><h6>Crea una pizza</h6></a>
+        </button>
         <div class="row">
                 @foreach (var pizza in Model)
                 {
@@ -29,6 +32,22 @@
 <style>
     .link_show{
         color: black;
+    }
+
+    .link_create {
+        text-decoration: none;
+        color: #fff;
+    }
+
+    .link_create:hover {
+       color: #f0f0f0;
+    }
+
+    .link_create h6 {
+       margin: 0;
+       font-size: 16px;
+       font-weight: bold;
+       text-align: center; /* Centra il testo all'interno del link */
     }
 </style>
 
