@@ -34,5 +34,27 @@ namespace La_mia_pizzeria.Models
             db.Pizzas.Add(pizza);
             db.SaveChanges();
         }
+
+        public static bool UpdatePizza(int id, string name, string description, string img, decimal price)
+        {
+            using PizzaContext db = new PizzaContext();
+            var pizza = db.Pizzas.Find(id);
+
+            if (pizza == null)
+            {
+                return false;
+            }
+
+            pizza._name = name;
+            pizza._description = description;
+            pizza._img = img;
+            pizza._price = price;
+
+
+            db.SaveChanges();
+
+            return true;
+
+        }
     }
 }
