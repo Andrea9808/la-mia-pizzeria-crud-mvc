@@ -100,5 +100,21 @@ namespace La_mia_pizzeria.Controllers
             }
         }
 
+        //DELETE
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int id)
+        {
+            if(PizzaManager.DeletePizza(id))
+            {
+                return RedirectToAction("Index");
+            }
+            else 
+            { 
+                return View("Error"); 
+            }
+        }
+
     }
 }

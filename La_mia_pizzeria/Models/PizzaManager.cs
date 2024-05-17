@@ -56,5 +56,21 @@ namespace La_mia_pizzeria.Models
             return true;
 
         }
+
+        public static bool DeletePizza(int id)
+        {
+            using PizzaContext db = new PizzaContext();
+            var pizza = db.Pizzas.Find(id);
+
+            if(pizza == null)
+            {
+                return false;
+            }
+
+            db.Pizzas.Remove(pizza);
+            db.SaveChanges();
+
+            return true;
+        }
     }
 }
