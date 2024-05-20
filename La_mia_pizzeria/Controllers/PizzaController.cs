@@ -31,39 +31,48 @@ namespace La_mia_pizzeria.Controllers
 
             using (PizzaContext db = new PizzaContext())
             {
-                var pizza = db.Pizzas.Find(id);
+                Pizza pizzaFound = db.Pizzas.Where(profile => profile.Id == id)
+                    .Include(profile => profile.Categories).FirstOrDefault();
 
-                if (pizza == null)
+                if (pizzaFound == null)
                 {
                     return View("Error");
                 }
-                return View(pizza);
+                return View(pizzaFound);
             }
 
         }
 
         //CREATE
+        //with 1 to *
         public IActionResult Create()
         {
-            return View("Create");
+            PizzaFormModel model = new PizzaFormModel();
+            model.Pizza = new Pizza();
+            model.Categories = PizzaManager.GetCategories();
+            return View(model);
         }
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Pizza data)
+        public IActionResult Create(PizzaFormModel data)
         {
-            if (!ModelState.IsValid)
+            
+            if (!ModelState.IsValid )
             {
+                List<Category> categories = PizzaManager.GetCategories();
+                data.Categories = categories;
                 return View("Create", data);
             }
 
-            PizzaManager.InsertPizza(data);
+            PizzaManager.InsertPizza(data.Pizza);
 
             return RedirectToAction("Index");
         }
 
         //UPDATE
+        [HttpGet]
         public IActionResult Update(int id)
         {
             using (PizzaContext db = new PizzaContext())
@@ -76,21 +85,24 @@ namespace La_mia_pizzeria.Controllers
                 }
                 else
                 {
-                    return View(pizza);
+                    PizzaFormModel model = new PizzaFormModel(pizza, PizzaManager.GetCategories());
+                    return View(model);
                 }
             }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Update(int id, Pizza data) 
+        public IActionResult Update(int id, PizzaFormModel data) 
         {
             if (!ModelState.IsValid)
             {
+                List<Category> categories = PizzaManager.GetCategories();
+                data.Categories = categories;
                 return View("Update", data);
             }
 
-            if(PizzaManager.UpdatePizza(id, data._name, data._description, data._img, data._price))
+            if(PizzaManager.UpdatePizza(id, data.Pizza._name, data.Pizza._description, data.Pizza._img, data.Pizza._price, data.Pizza.CategoryId))
             {
                 return RedirectToAction("Index");
             }

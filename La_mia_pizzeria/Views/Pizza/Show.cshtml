@@ -5,6 +5,17 @@
         <h5 class="card-title">@Model._name</h5>
         <p class="card-text">@Model._description</p>
         <p class="price">Prezzo: €@Model._price</p>
+        <p>
+            <strong>Categoria:</strong>
+            @if (Model.Categories != null)
+            {
+                @Model.Categories._name
+            }
+            else
+            {
+                <span>Nessuna categoria selezionata</span>
+            }
+        </p>
     </div>
 </div>
 
@@ -19,7 +30,7 @@
     }
 
     ._card {
-        border: 1px solid lightgray;
+        
         animation: fadeIn 0.5s ease-in-out;
     }
 

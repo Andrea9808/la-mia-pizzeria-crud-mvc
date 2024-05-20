@@ -6,6 +6,8 @@ namespace La_mia_pizzeria.Models
     [Table("pizza")]
     public class Pizza
     {
+        private object context;
+
         [Key] public int Id { get; set; }
 
 
@@ -43,5 +45,6 @@ namespace La_mia_pizzeria.Models
             _img = img;
             _price = price;
         }
+
     }
 }

@@ -1,9 +1,11 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 
 namespace La_mia_pizzeria.Models
 {
     static class PizzaManager
     {
+        //LEGGE I DATI
         public static List<Pizza> GetPizzasFromDatabase()
         {
             using (PizzaContext db = new PizzaContext())
@@ -28,6 +30,7 @@ namespace La_mia_pizzeria.Models
             return pizze;
         }
 
+        //INSERISCE I DATI
         public static void InsertPizza(Pizza pizza)
         {
             using PizzaContext db = new PizzaContext();
@@ -35,7 +38,8 @@ namespace La_mia_pizzeria.Models
             db.SaveChanges();
         }
 
-        public static bool UpdatePizza(int id, string name, string description, string img, decimal price)
+        //AGGIORNA/MODIFICA I DATI
+        public static bool UpdatePizza(int id, string name, string description, string img, decimal price, int? categoryId)
         {
             using PizzaContext db = new PizzaContext();
             var pizza = db.Pizzas.Find(id);
@@ -49,6 +53,7 @@ namespace La_mia_pizzeria.Models
             pizza._description = description;
             pizza._img = img;
             pizza._price = price;
+            pizza.CategoryId = categoryId;
 
 
             db.SaveChanges();
@@ -57,6 +62,7 @@ namespace La_mia_pizzeria.Models
 
         }
 
+        //CANCELLA I DATI
         public static bool DeletePizza(int id)
         {
             using PizzaContext db = new PizzaContext();
@@ -71,6 +77,14 @@ namespace La_mia_pizzeria.Models
             db.SaveChanges();
 
             return true;
+        }
+
+
+        //prendiamo tutte le categorie
+        public static List<Category> GetCategories()
+        {
+            using PizzaContext db = new PizzaContext();
+            return db.Categories.ToList();
         }
     }
 }

@@ -1,33 +1,50 @@
-﻿@model Pizza
+﻿@model PizzaFormModel
 
-<h1>Modifica la pizza @Model._name</h1>
+<h1>Modifica la pizza @Model.Pizza._name</h1>
 <div class="body">
     <div class="my-container-form">
-        <form asp-controller="Pizza" asp-action="Update" asp-route-id="@Model.Id" method="post">
+        <form asp-controller="Pizza" asp-action="Update" asp-route-id="@Model.Pizza.Id" method="post">
             @Html.AntiForgeryToken()
 
             <div class="mb-3">
-                <input asp-for="_name" class="d-block w-100 form__input" placeholder="Nome" />
+                <input asp-for="Pizza._name" class="d-block w-100 form__input" placeholder="Nome" />
                 <label for="_name" class="form__label">Nome</label>
-                <span asp-validation-for="_name" class="text-danger"></span>
+                <span asp-validation-for="Pizza._name" class="text-danger"></span>
             </div>
 
             <div class="mb-3">
-                <input asp-for="_description" class="d-block w-100 form__input" placeholder="Descrizione" />
+                <input asp-for="Pizza._description" class="d-block w-100 form__input" placeholder="Descrizione" />
                 <label for="_description" class="form__label">Descrizione</label>
-                <span asp-validation-for="_description" class="text-danger"></span>
+                <span asp-validation-for="Pizza._description" class="text-danger"></span>
             </div>
 
             <div class="mb-3">
-                <input asp-for="_img" class="d-block w-100 form__input" placeholder="Immagine"/>
+                <input asp-for="Pizza._img" class="d-block w-100 form__input" placeholder="Immagine" />
                 <label for="_img" class="form__label">Immagine</label>
-                <span asp-validation-for="_img" class="text-danger"></span>
+                <span asp-validation-for="Pizza._img" class="text-danger"></span>
             </div>
 
             <div class="mb-3">
-                <input type="text" asp-for="_price" class="d-block w-100 form__input" placeholder="Prezzo"/>
+                <input type="text" asp-for="Pizza._price" class="d-block w-100 form__input" placeholder="Prezzo" />
                 <label for="_price" class="form__label">Prezzo</label>
-                <span asp-validation-for="_price" class="text-danger"></span>
+                <span asp-validation-for="Pizza._price" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <select asp-for="Pizza.CategoryId" rows="10" class="d-block w-100">
+                    <option value="">Seleziona una categoria: </option>
+                    @foreach (Category category in Model.Categories)
+                    {
+                        @if (Model.Pizza.CategoryId == category.CategoryId)
+                        {
+                            <option value="@category.CategoryId" selected>@category._name</option>
+                        }
+                        else
+                        {
+                            <option value="@category.CategoryId">@category._name</option>
+                        }
+                    }
+                </select>
             </div>
 
             <div class="text-end">

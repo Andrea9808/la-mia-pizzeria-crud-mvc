@@ -13,9 +13,6 @@ namespace La_mia_pizzeria.Models
 
         public Category() { }
 
-        public Category(string name)
-        {
-            _name = name;
-        }
+
     }
 }
