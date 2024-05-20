@@ -31,6 +31,9 @@ namespace La_mia_pizzeria.Models
         [Range(0.01, double.MaxValue, ErrorMessage = "Il prezzo deve essere maggiore di zero.")]
         public decimal _price { get; set; }
 
+        public int? CategoryId { get; set; }
+        public Category? Categories { get; set; }
+
         public Pizza() { }
 
         public Pizza(string name, string description, string img, decimal price)
