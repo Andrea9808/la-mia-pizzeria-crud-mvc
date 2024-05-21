@@ -16,6 +16,14 @@
                 <span>Nessuna categoria selezionata</span>
             }
         </p>
+        <div style="display: flex; flex-wrap: wrap; gap: 5px;">
+            @foreach (var ingredient in Model.Ingredients)
+            {
+                <div>
+                    @ingredient._name
+                </div>
+            }
+        </div>
     </div>
 </div>
 

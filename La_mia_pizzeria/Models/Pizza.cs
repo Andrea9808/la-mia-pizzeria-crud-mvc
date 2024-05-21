@@ -6,9 +6,11 @@ namespace La_mia_pizzeria.Models
     [Table("pizza")]
     public class Pizza
     {
-        private object context;
 
-        [Key] public int Id { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
 
 
         [Column("pizza_name")]
@@ -33,9 +35,13 @@ namespace La_mia_pizzeria.Models
         [Range(0.01, double.MaxValue, ErrorMessage = "Il prezzo deve essere maggiore di zero.")]
         public decimal _price { get; set; }
 
+        //1 to *
         public int? CategoryId { get; set; }
         public Category? Categories { get; set; }
 
+
+        //* to *
+        public List <Ingredient>? Ingredients { get; set; }
         public Pizza() { }
 
         public Pizza(string name, string description, string img, decimal price)

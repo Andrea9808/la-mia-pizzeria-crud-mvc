@@ -32,7 +32,10 @@ namespace La_mia_pizzeria.Controllers
             using (PizzaContext db = new PizzaContext())
             {
                 Pizza pizzaFound = db.Pizzas.Where(profile => profile.Id == id)
-                    .Include(profile => profile.Categories).FirstOrDefault();
+                    .Include(pizza => pizza.Categories)
+                    .Include(ingredient => ingredient.Ingredients)
+                    .FirstOrDefault();
+
 
                 if (pizzaFound == null)
                 {
@@ -44,12 +47,13 @@ namespace La_mia_pizzeria.Controllers
         }
 
         //CREATE
-        //with 1 to *
+        //with 1 to * and * to *
         public IActionResult Create()
         {
             PizzaFormModel model = new PizzaFormModel();
             model.Pizza = new Pizza();
             model.Categories = PizzaManager.GetCategories();
+            model.CreateIngredients();
             return View(model);
         }
 
@@ -63,10 +67,11 @@ namespace La_mia_pizzeria.Controllers
             {
                 List<Category> categories = PizzaManager.GetCategories();
                 data.Categories = categories;
+                data.CreateIngredients();
                 return View("Create", data);
             }
 
-            PizzaManager.InsertPizza(data.Pizza);
+            PizzaManager.InsertPizza(data.Pizza, data.SelectedIngredients);
 
             return RedirectToAction("Index");
         }
@@ -86,6 +91,7 @@ namespace La_mia_pizzeria.Controllers
                 else
                 {
                     PizzaFormModel model = new PizzaFormModel(pizza, PizzaManager.GetCategories());
+                    model.CreateIngredients();
                     return View(model);
                 }
             }
@@ -99,10 +105,11 @@ namespace La_mia_pizzeria.Controllers
             {
                 List<Category> categories = PizzaManager.GetCategories();
                 data.Categories = categories;
+                data.CreateIngredients();
                 return View("Update", data);
             }
 
-            if(PizzaManager.UpdatePizza(id, data.Pizza._name, data.Pizza._description, data.Pizza._img, data.Pizza._price, data.Pizza.CategoryId))
+            if(PizzaManager.UpdatePizza(id, data.Pizza._name, data.Pizza._description, data.Pizza._img, data.Pizza._price, data.Pizza.CategoryId, data.SelectedIngredients))
             {
                 return RedirectToAction("Index");
             }

@@ -4,6 +4,7 @@ using La_mia_pizzeria.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace La_mia_pizzeria.Migrations
 {
     [DbContext(typeof(PizzaContext))]
-    partial class PizzaContextModelSnapshot : ModelSnapshot
+    [Migration("20240521134451_UpdateEntityAddIngredient2")]
+    partial class UpdateEntityAddIngredient2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,15 +26,15 @@ namespace La_mia_pizzeria.Migrations
 
             modelBuilder.Entity("IngredientPizza", b =>
                 {
-                    b.Property<int>("IngredientsId")
-                        .HasColumnType("int");
-
                     b.Property<int>("PizzasId")
                         .HasColumnType("int");
 
-                    b.HasKey("IngredientsId", "PizzasId");
+                    b.Property<int>("ingredientsId")
+                        .HasColumnType("int");
 
-                    b.HasIndex("PizzasId");
+                    b.HasKey("PizzasId", "ingredientsId");
+
+                    b.HasIndex("ingredientsId");
 
                     b.ToTable("IngredientPizza");
                 });
@@ -113,15 +115,15 @@ namespace La_mia_pizzeria.Migrations
 
             modelBuilder.Entity("IngredientPizza", b =>
                 {
-                    b.HasOne("La_mia_pizzeria.Models.Ingredient", null)
-                        .WithMany()
-                        .HasForeignKey("IngredientsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("La_mia_pizzeria.Models.Pizza", null)
                         .WithMany()
                         .HasForeignKey("PizzasId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("La_mia_pizzeria.Models.Ingredient", null)
+                        .WithMany()
+                        .HasForeignKey("ingredientsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

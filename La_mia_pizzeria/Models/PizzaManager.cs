@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 
+
 namespace La_mia_pizzeria.Models
 {
     static class PizzaManager
@@ -31,18 +32,31 @@ namespace La_mia_pizzeria.Models
         }
 
         //INSERISCE I DATI
-        public static void InsertPizza(Pizza pizza)
+        public static void InsertPizza(Pizza pizza, List<string> SelectedIngredients = null)
         {
             using PizzaContext db = new PizzaContext();
+            if(SelectedIngredients != null)
+            {
+                pizza.Ingredients = new List<Ingredient>();
+
+                foreach(var IngredientId in SelectedIngredients)
+                {
+                    int id = int.Parse(IngredientId);
+                    var ingredient = db.Ingredients.FirstOrDefault(i => i.Id == id);
+                    pizza.Ingredients.Add(ingredient);
+                }
+
+            }
             db.Pizzas.Add(pizza);
             db.SaveChanges();
         }
 
         //AGGIORNA/MODIFICA I DATI
-        public static bool UpdatePizza(int id, string name, string description, string img, decimal price, int? categoryId)
+        public static bool UpdatePizza(int id, string name, string description, 
+            string img, decimal price, int? categoryId, List<string> ingredients)
         {
             using PizzaContext db = new PizzaContext();
-            var pizza = db.Pizzas.Find(id);
+            var pizza = db.Pizzas.Where(p => p.Id == id).Include(x => x.Ingredients).FirstOrDefault();
 
             if (pizza == null)
             {
@@ -55,7 +69,18 @@ namespace La_mia_pizzeria.Models
             pizza._price = price;
             pizza.CategoryId = categoryId;
 
+            pizza.Ingredients.Clear();
+            if (ingredients != null)
+            {
+                foreach(var ingredient in ingredients)
+                {
+                    int ingredientId = int.Parse(ingredient);
+                    var ingredientFromDB = db.Ingredients.FirstOrDefault(x => x.Id == ingredientId);
+                    pizza.Ingredients.Add(ingredientFromDB);
+                }
+            }
 
+            //db.Pizzas.Add(pizza);
             db.SaveChanges();
 
             return true;
@@ -85,6 +110,12 @@ namespace La_mia_pizzeria.Models
         {
             using PizzaContext db = new PizzaContext();
             return db.Categories.ToList();
+        }
+
+        public static List<Ingredient> GetIngredients()
+        {
+            using PizzaContext db = new PizzaContext();
+            return db.Ingredients.ToList();
         }
     }
 }
