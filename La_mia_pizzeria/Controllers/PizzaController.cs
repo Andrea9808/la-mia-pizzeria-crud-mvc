@@ -27,6 +27,14 @@ namespace La_mia_pizzeria.Controllers
             }
         }
 
+        public IActionResult HomePage()
+        {
+            using (PizzaContext db = new PizzaContext())
+            {
+                return View("HomePage");
+            }
+        }
+
         //SHOW
         [Authorize(Roles = "USER, ADMIN")]
         public IActionResult Show(int id)
